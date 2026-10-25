@@ -51,8 +51,8 @@ void solve()
 int main()
 {
   ios::sync_with_stdio(0) , cin.tie(0) , cout.tie(0) ;
-  freopen("travel.in" , "r" , stdin) ;
-  freopen("travel.out" , "w" , stdout) ;
+  freopen("kth.in" , "r" , stdin) ;
+  freopen("kth.out" , "w" , stdout) ;
   int oT_To = 1 ;
   // cin >> oT_To ;
   while(oT_To--) solve() ;

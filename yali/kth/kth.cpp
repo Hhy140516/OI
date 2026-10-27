@@ -1,60 +1,61 @@
 #include<bits/stdc++.h>
 using namespace std ;
 #define ll long long
-const int MOD = 1e9 + 7 ;
-int n , x , k ;
+const int kMaxN = 5e6 + 5 , kMaxK = 505 ;
+ll n ;
+ll k ;
 string s ;
-int a[4][4] ;
-map<char , int> id ;
-void dfs(int step , int cnt)
-{
-  if(!k) return ;
-  if(step == s.size())
-  {
-    if(cnt >= x)
-    {
-      k-- ;
-      if(k == 0)
-      {
-        cout << s ;
-        exit(0) ;
-      }
-    }
-    return ;
-  }
-  if(s[step] != '?')
-  {
-    dfs(step + 1 , (step == 0 ? cnt : cnt + a[id[s[step - 1]]][id[s[step]]])) ;
-  }
-  else
-  {
-    for( int i = 0 ; i < 4 ; i++ )
-    {
-      s[step] = "PONI"[i] ;
-      dfs(step + 1 , (step == 0 ? cnt : cnt + a[id[s[step - 1]]][id[s[step]]])) ;
-      s[step] = '?' ;
-    }
-  }
-}
+unordered_map<string , ll> mp ;
+char q[kMaxN] ;
+ll l , r ;
 void solve()
-{ 
-  id['P'] = 0 , id['O'] = 1 , id['N'] = 2 , id['I'] = 3 ;
-  cin >> n >> x >> k ;
+{
+  cin >> n >> k ;
   cin >> s ;
-  cin >> a[2][2] >> a[2][1] >> a[2][3] >> a[2][0] ;
-  cin >> a[1][2] >> a[1][1] >> a[1][3] >> a[1][0] ;
-  cin >> a[3][2] >> a[3][1] >> a[3][3] >> a[3][0] ;
-  cin >> a[0][2] >> a[0][1] >> a[0][3] >> a[0][0] ;
-  dfs(0 , 0) ;
-  cout << -1 ;
+  s = ' ' + s ;
+  mp.clear() ;
+  l = 1 , r = 0 ;
+  ll len = (k - k % n) / n , ge = k % n ;
+  for( ll i = 1 ; i <= len ; i++ )
+  {
+    for( ll j = 1 ; j <= n ; j++ )
+    {
+      if(r - l + 1 == 0 || q[l] != s[j]) q[++r] = s[j] ;
+      else l++ ;
+    }
+    string S = "" ;
+    for( ll j = l ; j <= r ; j++ )
+    {
+      S += q[j] ;
+    }
+    if(mp.count(S))
+    {
+      ll jie = i - mp[S] ;
+      ge += ((len - i) % jie) * n ;
+      break ;
+    }
+    mp[S] = i ;
+  }
+  for( ll j = 1 ; j <= ge ; j++ )
+  {
+    if(r - l + 1 == 0 || q[l] != s[(j - 1) % n + 1]) q[++r] = s[(j - 1) % n + 1] ;
+    else l++ ;
+  }
+  cout << r - l + 1 << "\n" ;
+  if(r - l + 1 > 0)
+  {
+    for( ll j = l ; j <= r ; j++ ) cout << q[j] ;
+    cout << "\n" ;
+  }
 }
 int main()
 {
   ios::sync_with_stdio(0) , cin.tie(0) , cout.tie(0) ;
-  freopen("kth.in" , "r" , stdin) ;
-  freopen("kth.out" , "w" , stdout) ;
+  freopen("repeatqueue.in" , "r" , stdin) ;
+  freopen("repeatqueue.out" , "w" , stdout) ;
   int oT_To = 1 ;
-  // cin >> oT_To ;
+  cin >> oT_To ;
   while(oT_To--) solve() ;
   return 0 ;
 }
+

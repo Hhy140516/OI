@@ -148,51 +148,28 @@ struct cTr
     node as1 , as2 ;
     bool fl1 = 0 , fl2 = 0 ;
     while(top[u] != top[v])
-		{
-			if(dep[top[u]] >= dep[top[v]])
-			{
-				node C = query(1 , 1 , n , dfn[top[u]] , dfn[u]) ;
-				swap(C.pre , C.nxt) ;
-				if(!fl1) as1 = C ;
-				else as1 = merge(as1 , C) ;
-				fl1 = 1 ;
-				u = Fa[top[u]] ;
-			}
-			else
-			{
-				node C = query(1 , 1 , n , dfn[top[v]] , dfn[v]) ;
-				if(!fl2) as2 = C ;
-				else as2 = merge(C , as2) ;
-				fl2 = 1 ;
-				v = Fa[top[v]] ;
-			}
-		}
-		if(dep[u] < dep[v]) 
-		{
-			node C = query(1 , 1 , n , dfn[u] , dfn[v]) ;
-			if(!fl2) as2 = C ;
-			else as2 = merge(C , as2) ;
-			fl2 = 1 ;
-		}
-		else if(dep[u] > dep[v])
-		{
-			node C = query(1 , 1 , n , dfn[v] , dfn[u]) ;
-			swap(C.pre , C.nxt) ;
-			if(!fl1) as1 = C ;
-			else as1 = merge(as1 , C) ;
-			fl1 = 1 ;
-		}
-		else
     {
-      node t = query(1 , 1 , n , dfn[u] , dfn[u]) ;
-      if(!fl1) as1 = t ;
-      else as1 = merge(as1 , t) ;
-      fl1 = 1 ;
+      if(dep[top[u]] >= dep[top[v]]) 
+      {
+        if(!fl1) as1 = query(1 , 1 , n , dfn[top[u]] , dfn[u]) ;
+        else as1 = merge(as1 , query(1 , 1 , n , dfn[top[u]] , dfn[u])) ;
+        fl1 = 1 ;
+        u = Fa[top[u]] ;
+      }
+      else
+      {
+        if(!fl2) as2 = query(1 , 1 , n , dfn[top[v]] , dfn[v]) ;
+        else as2 = merge(query(1 , 1 , n , dfn[top[v]] , dfn[v]) , as2) ;
+        fl2 = 1 ;
+        v = Fa[top[v]] ;
+      }
     }
-		if(fl1 && fl2) return merge(as1 , as2).cnt ;
-		else if(fl1) return as1.cnt ;
-		else if(fl2) return as2.cnt ;
-		return 0 ;
+    if(dep[u] > dep[v]) swap(u , v) ;
+    if(!fl1) as1 = query(1 , 1 , n , dfn[u] , dfn[v]) ;
+    else as1 = merge(as1 , query(1 , 1 , n , dfn[u] , dfn[v])) ;
+    fl1 = 1 ;
+    if(fl2) as1 = merge(as1 , as2) ;
+    return as1.cnt ;
   }
 };
 cTr Tr ;

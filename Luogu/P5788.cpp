@@ -1,10 +1,9 @@
 #include<bits/stdc++.h>
 using namespace std ;
-#define int long long
+#define ll long long
 int n ;
 int a[3000005] ;
-int as[3000005] ;
-int stk[3000005] , top ;
+int stk[3000005] , top , ans[3000005] ;
 void solve()
 {
   cin >> n ;
@@ -12,14 +11,14 @@ void solve()
   for( int i = n ; i >= 1 ; i-- )
   {
     while(top && a[stk[top]] <= a[i]) top-- ;
-    as[i] = stk[top] ;
+    ans[i] = stk[top] ;
     stk[++top] = i ;
   }
-  for( int i = 1 ; i <= n ; i++ ) cout << as[i] << " " ;
+  for( int i = 1 ; i <= n ; i++ ) cout << ans[i] << " " ;
 }
-signed main()
+int main()
 {
-  ios::sync_with_stdio(0) , cin.tie(0) , cout.tie(0) ;
+  ios::sync_with_stdio(0) , cin.tie(0) , cout.tie(0) ; 
   int oT_To = 1 ;
   // cin >> oT_To ;
   while(oT_To--) solve() ;

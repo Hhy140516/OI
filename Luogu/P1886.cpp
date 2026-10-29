@@ -1,10 +1,12 @@
 #include<bits/stdc++.h>
 using namespace std ;
-#define int long long
+#define ll long long 
+const int kMaxN = 1e6 + 5 ;
+int l , r ;
 int n , k ;
-int a[1000005] ;
-int st[1000005] , l , r ;
-void get_min()
+int a[kMaxN] ;
+int st[kMaxN] ;
+void getmin()
 {
   l = 1 , r = 0 ;
   for( int i = 1 ; i <= n ; i++ )
@@ -12,10 +14,13 @@ void get_min()
     while(l <= r && a[st[r]] > a[i]) r-- ;
     st[++r] = i ;
     while(l <= r && st[l] <= i - k) l++ ;
-    if(i >= k) cout << a[st[l]] << " " ;
+    if(i >= k)
+    {
+      cout << a[st[l]] << " " ;
+    }
   }
 }
-void get_max()
+void getmax()
 {
   l = 1 , r = 0 ;
   for( int i = 1 ; i <= n ; i++ )
@@ -23,19 +28,24 @@ void get_max()
     while(l <= r && a[st[r]] < a[i]) r-- ;
     st[++r] = i ;
     while(l <= r && st[l] <= i - k) l++ ;
-    if(i >= k) cout << a[st[l]] << " " ;
+    if(i >= k)
+    {
+      cout << a[st[l]] << " " ;
+    }
   }
 }
 void solve()
 {
   cin >> n >> k ;
-  for( int i = 1 ; i <= n ; i++ ) cin >> a[i] ;
-  get_min() ;
+  for( int i = 1 ; i <= n ; i++ )
+  {
+    cin >> a[i] ;
+  }
+  getmin() ;
   cout << "\n" ;
-  get_max() ;
-  cout << "\n" ;
+  getmax() ;
 }
-signed main()
+int main()
 {
   ios::sync_with_stdio(0) , cin.tie(0) , cout.tie(0) ;
   int oT_To = 1 ;

@@ -1,7 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std ;
 #define ll long long
-const int kMaxN = 5e5 + 5 ;
 int n , m ;
 struct edge
 {
@@ -10,7 +9,8 @@ struct edge
   {
     return w < a.w ;
   }
-}edg[200005] ;
+};
+vector<edge> ve ;
 struct dsu
 {
   vector<int> fa ;
@@ -39,9 +39,9 @@ void kru()
 {
   dsu D ;
   ll as = 0 ;
-  for( int i = 1 ; i <= m ; i++ )
+  for( int i = 0 ; i < m ; i++ )
   {
-    int u = edg[i].u , v = edg[i].v , w = edg[i].w ;
+    int u = ve[i].u , v = ve[i].v , w = ve[i].w ;
     if(!D.check(u , v))
     {
       D.unionn(u , v) ;
@@ -65,9 +65,9 @@ void solve()
   {
     int u , v , w ;
     cin >> u >> v >> w ;
-    edg[i] = {u , v , w} ;
+    ve.push_back({u , v , w}) ;
   }
-  sort(edg + 1 , edg + m + 1) ;
+  sort(ve.begin() , ve.end()) ;
   kru() ;
 }
 int main()
@@ -76,5 +76,5 @@ int main()
   int oT_To = 1 ;
   // cin >> oT_To ;
   while(oT_To--) solve() ;
-  return 0 ; 
+  return 0 ;
 }

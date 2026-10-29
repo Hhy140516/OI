@@ -1,21 +1,9 @@
 #include<bits/stdc++.h>
 using namespace std ;
 #define ll long long
-const int MOD = 48932573 , base1 = 131 , base2 = 13331 ;
+const int kMaxL = 2e7 , base1 = 13331 , base2 = 131 , MOD1 = 1e7 + 1 , MOD2 = 1e7 + 3 ;
 int n ;
-bool f1[50000005] , f2[50000005] ;
-pair<ll , ll> get(string s)
-{
-  ll nw1 = 0 , nw2 = 0 ;
-  for( int j = 0 ; j < s.size() ; j++ )
-  {
-    nw1 = nw1 * base1 % MOD + s[j] ;
-    nw2 %= MOD ;
-    nw2 = nw2 * base2 % MOD + s[j] ;
-    nw2 %= MOD ;
-  }
-  return {nw1 , nw2} ;
-}
+bool vis1[kMaxL] , vis2[kMaxL] ;
 void solve()
 {
   cin >> n ;
@@ -24,9 +12,16 @@ void solve()
   {
     string s ;
     cin >> s ;
-    pair<int , int> p = get(s) ;
-    if(f1[p.first] && f2[p.second]) cnt-- ;
-    f1[p.first] = f2[p.second] = 1 ;
+    long long nw1 = 0 , nw2 = 0 ;
+    for( int j = 0 ; j < s.size() ; j++ )
+    {
+      nw1 = nw1 * base1 % MOD1 + s[j] ;
+      nw2 %= MOD1 ;
+      nw2 = nw2 * base2 % MOD2 + s[j] ;
+      nw2 %= MOD2 ;
+    }
+    if(vis1[nw1] && vis2[nw2]) cnt-- ;
+    vis1[nw1] = vis2[nw2] = 1 ;
   }
   cout << cnt ;
 }
